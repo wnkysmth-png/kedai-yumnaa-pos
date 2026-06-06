@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>POS Kasir Kedai Yumnaa v1</title>
+    <meta name="description" content="Aplikasi POS kasir Android-first untuk Kedai Yumnaa." />
+    <meta name="theme-color" content="#19624a" />
+    <meta name="background-color" content="#f7f4ec" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="POS Yumnaa" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icons/icon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="splash-screen" id="splashScreen" aria-hidden="true">
+      <img src="assets/icons/icon.svg" alt="" />
+      <strong>POS Yumnaa</strong>
+    </div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">POS Kasir</p>
+          <h1>Kedai Yumnaa</h1>
+        </div>
+        <div class="topbar-actions">
+          <button class="install-btn" id="installButton" type="button" hidden>Install</button>
+          <button class="icon-btn" id="historyButton" type="button" title="Riwayat transaksi" aria-label="Riwayat transaksi">
+            <span aria-hidden="true">#</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="menu-panel" aria-label="Daftar menu">
+          <div class="search-row">
+            <label class="search-box" for="searchInput">
+              <span aria-hidden="true">Q</span>
+              <input id="searchInput" type="search" placeholder="Cari menu..." autocomplete="off" />
+            </label>
+          </div>
+
+          <nav class="category-tabs" id="categoryTabs" aria-label="Kategori menu"></nav>
+
+          <div class="menu-summary">
+            <div>
+              <p class="muted" id="categoryLabel">Semua menu</p>
+              <strong id="menuCount">0 item</strong>
+            </div>
+            <div class="muted">Terlaris otomatis naik</div>
+          </div>
+
+          <div class="menu-grid" id="menuGrid"></div>
+        </section>
+
+        <aside class="cart-panel" id="cartPanel" aria-label="Keranjang pesanan">
+          <div class="bill-context" id="billContext">
+            <div>
+              <p class="eyebrow">Bill Aktif</p>
+              <strong id="activeBillLabel">Belum ada bill</strong>
+              <span id="activeBillMeta">Buka bill baru atau pilih bill aktif.</span>
+            </div>
+          </div>
+
+          <div class="cart-header">
+            <div>
+              <p class="eyebrow">Pesanan Baru</p>
+              <h2>Keranjang</h2>
+            </div>
+            <button class="ghost-btn" id="clearCartButton" type="button">Kosongkan</button>
+          </div>
+
+          <div class="order-fields">
+            <label>
+              <span>Nama customer</span>
+              <input id="customerName" type="text" placeholder="Opsional" />
+            </label>
+            <label>
+              <span>Nomor meja</span>
+              <input id="tableNumber" type="text" placeholder="Contoh: 07" />
+            </label>
+          </div>
+
+          <div class="cart-items" id="cartItems"></div>
+
+          <label class="general-note">
+            <span>Note umum</span>
+            <textarea id="generalNote" rows="3" placeholder="Catatan untuk pesanan ini"></textarea>
+          </label>
+
+          <label class="payment-field">
+            <span>Metode pembayaran</span>
+            <select id="paymentMethod">
+              <option value="Tunai">Tunai</option>
+              <option value="QRIS">QRIS</option>
+              <option value="Transfer">Transfer</option>
+            </select>
+          </label>
+
+          <div class="total-box">
+            <span>Total Keranjang</span>
+            <strong id="cartTotal">Rp0</strong>
+          </div>
+
+          <div class="bill-actions">
+            <button class="checkout-btn" id="openBillButton" type="button">Buka Bill Baru</button>
+            <button class="checkout-btn" id="addToBillButton" type="button">Tambah ke Bill Aktif</button>
+            <button class="secondary-btn" id="activeBillsButton" type="button">Lihat Bill Aktif</button>
+            <button class="pay-btn" id="payBillButton" type="button">Bayar / Tutup Bill</button>
+          </div>
+
+          <div class="active-bill-detail" id="activeBillDetail"></div>
+        </aside>
+      </main>
+    </div>
+
+    <dialog class="receipt-dialog" id="receiptDialog">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow" id="receiptEyebrow">Struk</p>
+          <h2 id="receiptTitle">Transaksi tersimpan</h2>
+        </div>
+        <button class="icon-btn" id="closeReceiptButton" type="button" title="Tutup" aria-label="Tutup struk">&times;</button>
+      </div>
+      <div class="dialog-actions">
+        <button class="primary-btn" id="printCustomerButton" type="button">Cetak Customer</button>
+        <button class="primary-btn" id="printKitchenButton" type="button">Cetak Kitchen</button>
+      </div>
+      <div class="receipt-preview" id="receiptPreview"></div>
+    </dialog>
+
+    <dialog class="active-bills-dialog" id="activeBillsDialog">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">Open Bill</p>
+          <h2>Bill Aktif</h2>
+        </div>
+        <button class="icon-btn" id="closeActiveBillsButton" type="button" title="Tutup" aria-label="Tutup daftar bill aktif">&times;</button>
+      </div>
+      <div class="bill-search">
+        <label class="search-box" for="billSearchInput">
+          <span aria-hidden="true">Q</span>
+          <input id="billSearchInput" type="search" placeholder="Cari meja/customer..." autocomplete="off" />
+        </label>
+      </div>
+      <div class="active-bills-list" id="activeBillsList"></div>
+    </dialog>
+
+    <dialog class="history-dialog" id="historyDialog">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">Riwayat</p>
+          <h2>Transaksi tersimpan</h2>
+        </div>
+        <button class="icon-btn" id="closeHistoryButton" type="button" title="Tutup" aria-label="Tutup riwayat">&times;</button>
+      </div>
+      <div class="history-list" id="historyList"></div>
+    </dialog>
+
+    <button class="cart-dock" id="cartDock" type="button" hidden>
+      <span id="cartDockLabel">Keranjang</span>
+      <strong id="cartDockSummary">0 item - Rp0</strong>
+    </button>
+
+    <script src="data/menu.js"></script>
+    <script src="assets/js/pwa.js"></script>
+    <script src="assets/js/adapters/printer-bluetooth.js"></script>
+    <script src="assets/js/adapters/google-sheets-sync.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

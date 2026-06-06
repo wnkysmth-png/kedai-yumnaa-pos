@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="POS Yumnaa">
+  <rect width="512" height="512" rx="96" fill="#19624a"/>
+  <rect x="72" y="96" width="368" height="320" rx="44" fill="#fffdf8"/>
+  <rect x="108" y="136" width="296" height="72" rx="18" fill="#dcecdf"/>
+  <circle cx="144" cy="270" r="22" fill="#19624a"/>
+  <circle cx="222" cy="270" r="22" fill="#19624a"/>
+  <circle cx="300" cy="270" r="22" fill="#19624a"/>
+  <circle cx="378" cy="270" r="22" fill="#e8b54d"/>
+  <rect x="120" y="332" width="272" height="38" rx="19" fill="#b43f2f"/>
+  <text x="256" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#0d4634">YM</text>
+</svg>

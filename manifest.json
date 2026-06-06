@@ -1,0 +1,36 @@
+{
+  "name": "POS Kasir Kedai Yumnaa",
+  "short_name": "POS Yumnaa",
+  "description": "Aplikasi POS kasir Android-first untuk Kedai Yumnaa.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "theme_color": "#19624a",
+  "background_color": "#f7f4ec",
+  "categories": ["business", "productivity", "food"],
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buka Kasir",
+      "short_name": "Kasir",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "assets/icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}
